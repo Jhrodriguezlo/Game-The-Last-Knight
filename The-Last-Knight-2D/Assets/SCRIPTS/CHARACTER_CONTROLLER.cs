@@ -12,6 +12,10 @@ public class CHARACTER_CONTROLLER : MonoBehaviour
     private bool isFacingRight = true; 
     private int saltosDisponibles = 1000; 
     private Animator animator;
+    public LayerMask capaSuelo;
+    public AudioManager audioManager;
+    public AudioClip sonidoSalto;
+
 
     void Start()
     {
@@ -29,10 +33,12 @@ public class CHARACTER_CONTROLLER : MonoBehaviour
     {
         float inputMovement = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(inputMovement * velocidad, rb.velocity.y);
+        
 
        if(inputMovement != 0f)
     {
         animator.SetBool("isRunning", true);
+
     }
     else
     {
@@ -47,6 +53,7 @@ public class CHARACTER_CONTROLLER : MonoBehaviour
             float saltoReal = saltoAltura * sensibilidadSalto;
             rb.velocity = new Vector2(rb.velocity.x, saltoReal);
             saltosDisponibles--;
+            audioManager.ReproducirSonido(sonidoSalto);
         }
     }
 
